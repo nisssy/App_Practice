@@ -22,7 +22,7 @@ function MemoDetailScreen() {
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident, praesentium.
         </Text>
       </ScrollView>
-      <CircleButton style={{ top: 200, bottom: 'auto' }}>+</CircleButton>
+      <CircleButton style={{ top: 200, bottom: 'auto' }} name="edit" />
     </View>
   );
 }
