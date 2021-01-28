@@ -21,12 +21,13 @@ function MemoCreateScreen(props) {
     const ref = db.collection(`users/${userId}/memos`);
     ref.add({
       memo: input,
-      createdAt: new Date(),
+      updatedAt: new Date(),
     }).then((docRef) => {
       Alert.alert(docRef.id);
-    }).catch(
-      Alert.alert('メモの作成に失敗しました。'),
-    );
+    }).catch((error) => {
+      Alert.alert(error.code, error.message);
+      // Alert.alert('メモの作成に失敗しました。'),
+    });
     navigation.goBack();
   }
   return (
