@@ -11,12 +11,13 @@ import MemoEditScreen from './src/screens/MemoEditScreen';
 import MemoListScreen from './src/screens/MemoListScreen';
 import { firebaseConfig } from './src/lib/firebase';
 
-const Stack = createStackNavigator();
+require('firebase/firestore');
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
 }
-// console.log(firebaseConfig);
+
+const Stack = createStackNavigator();
 
 export default function App() {
   return (
