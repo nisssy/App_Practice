@@ -5,7 +5,9 @@ import {
   TextInput,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import firebase from 'firebase';
 import { shape } from 'prop-types';
 import Button from '../components/Button';
 
@@ -13,6 +15,16 @@ function SignUpScreen(props) {
   const { navigation } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  function handlePress() {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
+      .then(() => {
+        navigation.reset({ index: 0, routes: [{ name: 'List' }] });
+      })
+      .catch(() => {
+        Alert.alert('無効なメールアドレスです');
+      });
+  }
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -40,12 +52,7 @@ function SignUpScreen(props) {
         />
         <Button
           value="Submit"
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'List' }],
-            });
-          }}
+          onPress={handlePress}
         />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Already registered?</Text>

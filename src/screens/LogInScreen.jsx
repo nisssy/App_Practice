@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   View,
   StyleSheet,
   TextInput,
   Text,
   TouchableOpacity,
+  Alert,
 } from 'react-native';
+import firebase from 'firebase';
 import { shape } from 'prop-types';
 import Button from '../components/Button';
 
@@ -13,6 +15,27 @@ function LogInScreen(props) {
   const { navigation } = props;
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  useEffect(() => {
+    const unsubscribe = firebase.auth().onAuthStateChanged((user) => {
+      if (user) {
+        navigation.reset({ index: 0, routes: [{ name: 'List' }] });
+      }
+    });
+    return () => {
+      unsubscribe();
+    };
+  }, []);
+
+  function handlePress() {
+    firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(() => {
+        navigation.reset({ index: 0, routes: [{ name: 'List' }] });
+      })
+      .catch(() => {
+        Alert.alert('メールアドレスまたはパスワードが違います。');
+      });
+  }
   return (
     <View style={styles.container}>
       <View style={styles.inner}>
@@ -40,12 +63,7 @@ function LogInScreen(props) {
         />
         <Button
           value="Submit"
-          onPress={() => {
-            navigation.reset({
-              index: 0,
-              routes: [{ name: 'List' }],
-            });
-          }}
+          onPress={handlePress}
         />
         <View style={styles.footer}>
           <Text style={styles.footerText}>Not registered?</Text>
