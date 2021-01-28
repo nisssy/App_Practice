@@ -5,14 +5,14 @@ import {
   Text,
   StyleSheet,
 } from 'react-native';
+import { shape } from 'prop-types';
 
-import AppBar from '../components/AppBat';
 import CircleButton from '../components/CircleButton';
 
-function MemoDetailScreen() {
+function MemoDetailScreen(props) {
+  const { navigation } = props;
   return (
     <View style={styles.container}>
-      <AppBar />
       <View style={styles.memoHeader}>
         <Text style={styles.memoTitle}>買い物リスト</Text>
         <Text style={styles.memoDate}>2020年12月24日 10:00</Text>
@@ -22,10 +22,18 @@ function MemoDetailScreen() {
           Lorem, ipsum dolor sit amet consectetur adipisicing elit. Provident, praesentium.
         </Text>
       </ScrollView>
-      <CircleButton style={{ top: 200, bottom: 'auto' }} name="edit" />
+      <CircleButton
+        style={{ top: 60, bottom: 'auto' }}
+        name="edit"
+        onPress={() => { navigation.navigate('Edit'); }}
+      />
     </View>
   );
 }
+
+MemoDetailScreen.propTypes = {
+  navigation: shape().isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {

@@ -5,24 +5,32 @@ import {
   TextInput,
   // KeyboardAvoidingView,
 } from 'react-native';
+import { shape } from 'prop-types';
 
-import AppBar from '../components/AppBat';
 import CircleButton from '../components/CircleButton';
 import KeyboardSafeView from '../components/KeyboardSafeView';
 
-function MemoEditScreen() {
+function MemoEditScreen(props) {
+  const { navigation } = props;
   return (
     <KeyboardSafeView style={styles.container}>
-      <AppBar />
       <View style={styles.inputContainer}>
         <TextInput value="買い物リスト" multiline style={styles.input} />
       </View>
       <View>
-        <CircleButton name="check" style={{ top: 'auto', bottom: 40 }} />
+        <CircleButton
+          name="check"
+          style={{ top: 'auto', bottom: 40 }}
+          onPress={() => { navigation.goBack(); }}
+        />
       </View>
     </KeyboardSafeView>
   );
 }
+
+MemoEditScreen.propTypes = {
+  navigation: shape().isRequired,
+};
 
 const styles = StyleSheet.create({
   container: {
